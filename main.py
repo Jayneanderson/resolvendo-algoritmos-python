@@ -17,3 +17,22 @@ class Coisa:
 coisa = Coisa()
 
 coisa.show()
+
+class Agente(Coisa):
+    def __init__(self, estado = None, funcao_agente = None):
+        super().__init__(estado)
+
+    if funcao_agente == None:
+        def funcao_agente(*entradas): #aqui é para indicar que podem ter várias entradas
+            return 'Ação padrão'
+        self.funcao_agente = funcao_agente
+        self.historico_percepcoes = []
+  
+    #Recebe do meio exterior. Pode ser de um sensor, mas nesse caso é do teclado
+    def percepcao(self):
+        entrada = input("Entre com as percepções")
+        self.historico_percepcoes.append(eval(entrada))
+
+    #mostra o resultado da função agente
+        def saida(self):
+            return self.funcao_agente(self.historico_percepcoes)
