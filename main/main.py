@@ -4,7 +4,7 @@ class Coisa:
         self.estado = estado
 
     def __repr__(self):
-        # Objeto na forma de strinf
+        # Objeto na forma de string
         return '{}'.format(getattr(self, '__name__', self.__class__.__name__))
 
     def mostrar_estado(self):
@@ -20,17 +20,34 @@ class Agente(Coisa):
         self.nome = nome
         super().__init__(estado)
         self.funcao_agente = ''
-        self.historico_percepcoes = []
+        self.historico_percepcoes = {}
 
 # Esquerda, direita, aspirar, noOp
-    # def aspirar(self, local):
-
-        
+    def acao_agente(self, conteudo):
+        return "limpo"
 
     # Recebe do meio exterior. Pode ser de um sensor, mas nesse caso é do teclado
+    
     def percepcao(self):
-        entrada = input("Entre com as percepções")
-        self.historico_percepcoes.append(eval(entrada))
+        print(f'Local inicial: {self.estado}')
+        valor = ''
+
+
+        # for chave in local_inicial.keys():
+        #     if self.historico_percepcoes.get(chave):
+        #         print('O local já foi verificado')
+        #         continue
+        #     else:
+        #         valor = local_inicial[chave]
+        #         print(valor)
+        #         self.historico_percepcoes[chave] = valor
+            
+    def historico(self):
+        return self.historico_percepcoes
+            # dicio[chave] = valor
+                
+        # recebo um local: verifico se este local já foi limpo.
+        # se sim, passo para o próximo, senão verifico e chamo a função do agente.
 
     # mostra o resultado da função agente
     def saida(self):
@@ -43,16 +60,12 @@ class Ambiente(Coisa):
         # São literalmente objetos ao redor que não sejam agentes
         self.objetos_no_ambiente = []
         self.agentes = []
-        self.locais = {}
-
-    def percepcao(self, agente):
-        # Percepção do agente
-        return agente
+        self.locais = {"A":"sujo", "B":"limpo", "C":"limpo","D":"limpo"}
 
     def adicionar_agente(self, agente):
         self.agentes.append(agente)
 
-    def getAgentes(self):
+    def get_agentes(self):
         print('Lista de agentes \n')
         for i in self.agentes:
             print(i.nome)
@@ -60,20 +73,22 @@ class Ambiente(Coisa):
     def adicionar_objeto(self, objeto):
         self.objetos_no_ambiente.append(objeto())
 
-    def adicionar_local(self, local, conteudo):
-        local = local.upper()
-        if local in self.locais.keys() :
-            print('O local já existe!') 
+    # def adicionar_local(self, local, conteudo):
+    #     local = local.upper()
+    #     if local in self.locais.keys():
+    #         print('O local já existe!') 
 
-        if conteudo != 'sujo' and conteudo != 'limpo':
-            print('Local só poder ser sujo ou limpo')
+    #     if conteudo != 'sujo' and conteudo != 'limpo':
+    #         print('Local só poder ser sujo ou limpo')
 
-        else:
-            self.locais[local] = conteudo
+    #     else:
+    #         self.locais[local] = conteudo
 
-    def getLocais(self):
-        for local in self.locais.keys():
-            print(f'O local {local} está {self.locais[local]}')
+    def get_locais(self):
+
+        return self.locais
+        # for local in self.locais.keys():
+            # print(f'O local {local} está {self.locais[local]}')
 
 
 # Esquerda, direita, aspirar, noOp
@@ -82,17 +97,18 @@ class Ambiente(Coisa):
 
 
 ambiente = Ambiente(True)
-print('Locais \n')
+print('Visão do ambiente')
 
-ambiente.adicionar_local('A', 'sujo')
-ambiente.adicionar_local('B', 'sujo')
+print(ambiente.get_locais())
 
-ambiente.getLocais()
 
-agente = Agente("agente1", True)
-agente2 = Agente("agente2", True)
+
+agente = Agente("agente1", "A")
+agente2 = Agente("agente2", "B")
 ambiente.adicionar_agente(agente)
 ambiente.adicionar_agente(agente2)
+
+agente.percepcao()
 
 
 
