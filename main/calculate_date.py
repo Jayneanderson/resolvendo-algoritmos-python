@@ -1,11 +1,13 @@
 from datetime import datetime
 
 def getAge(birthDate):
-    day, mother, year = birthDate.split('/')
-    curretYear, cuurentMonth, currentDay = datetime.today().strftime('%Y-%m-%d').split('-')
+    day, month, year = birthDate.split('/')
+    currentYear, currentMonth, currentDay = datetime.today().strftime('%Y-%m-%d').split('-')
+    whatYear = int(currentYear) - int(year)
 
-    year =+ year
-    print(year)
+    if(currentMonth < month or currentMonth == month and currentDay < day):
+        whatYear = whatYear - 1
 
+    return whatYear < 0 or whatYear
 
-getAge("03/08/1997")
+print(getAge("05/11/1997"))
