@@ -1,7 +1,18 @@
-from ntpath import join
-from posixpath import split
-import string
-from pandas import concat
+# Link do problema: https://www.hackerrank.com/challenges/bigger-is-greater/problem?
+# Solução:
+# transforme a string em um array de caracteres
+# percorra o array de trás para frente e verifique:
+#     se o caractere atual for maior do que o caractere anterior e a posição for maior 0, guarde este caracte (pivot) e a posição dele
+#     senão, pule para a próxima iteração (use continue)
+# declare uma variável para armazenar o menor valor que é maior em sequencia do que o pivot (se pivot é a, então o menor tem que ser b, ou c, d, o que for maior e venha depois do a)
+# declare uma variável para pegar o index do menor caractere que é maior do que o pivot
+# percorra da esquerda para a direita depois da posição do pivot
+# verifique qual é o caractere menor depois do pivot, mas que é maior do que o pivot. Salve ele
+# troque o pivot por este caractere menor da direira, mas que é maior do que o pivot
+# ordene todos os elementos depois do pivot e salve em um array
+# concatene os primeiros elementos até o pivor com o array ordenado
+# dê um join para que tudo se torne string e retorne o array
+# fora do laço for,  retorne 'no answer' se o array acabar
 
 
 myStrings = []
@@ -13,15 +24,15 @@ def biggerIsGreater(w):
     pivot = ''
     pivotIndex = 0
     j = 0
-    result = 0
 
     for i in reversed(range(len(array))):
-        if (array[i] > array[i - 1]):
+        if (array[i] > array[i - 1] and i > 0):
             pivot = array[i - 1]
             pivotIndex = i - 1
         else:
             continue
-        smallerNumber = 'z'
+
+        smallerNumber = 'zk'
         smallerIndex = 0
         j = i
 
@@ -33,17 +44,23 @@ def biggerIsGreater(w):
             j += 1
         array[pivotIndex] = smallerNumber
         array[smallerIndex] = pivot
-        slice_object = slice(i, len(array))
         numbersTemp = sorted(array[i:len(array)])
         return "".join(array[0:i] + numbersTemp)
     return "no answer"
-        #numbersT'emp = array.slice(i, array.length).sort()
 
-# - guarde a primeira string
-# - guardar a primeira letra
-# - ordenar as demais letras
-# - pegar a última letra e mover para a penúltima posição
-# - a string temporária é maior do que a string recebida?
-#     se sim, retorne essa string
-#     senão, mova o último caractere para a posição anterior
-print(biggerIsGreater('dkhc'))
+
+print(biggerIsGreater('bb'))
+print(biggerIsGreater('lmno'))
+print(biggerIsGreater('dcba'))
+print(biggerIsGreater('dcbb'))
+print(biggerIsGreater('abdc'))
+print(biggerIsGreater('abcd'))
+print(biggerIsGreater('fedcbabcd'))
+
+
+
+
+
+
+
+
